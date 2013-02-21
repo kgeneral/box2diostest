@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F37144316D231A800A5CD2A /* libBox2DSim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37144216D231A800A5CD2A /* libBox2DSim.a */; };
 		9F522EFD16D215370092735D /* Box2D in Resources */ = {isa = PBXBuildFile; fileRef = 9F522EFC16D215370092735D /* Box2D */; };
-		9F522F0116D21DBA0092735D /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
 		9F522F0616D21F290092735D /* Engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0416D21F290092735D /* Engine.mm */; };
 		9F522F0916D21F680092735D /* Rectangle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0816D21F680092735D /* Rectangle.mm */; };
 		9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D8C16CB437E00B4E1A5 /* UIKit.framework */; };
@@ -25,6 +23,10 @@
 		9F9C8DA816CB437E00B4E1A5 /* DYViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */; };
 		9F9C8DAB16CB437E00B4E1A5 /* DYViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA916CB437E00B4E1A5 /* DYViewController_iPhone.xib */; };
 		9F9C8DAE16CB437E00B4E1A5 /* DYViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DAC16CB437E00B4E1A5 /* DYViewController_iPad.xib */; };
+		9FB8DF5D16D62F0D005D90EC /* libBox2DSim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37144216D231A800A5CD2A /* libBox2DSim.a */; };
+		9FB8DF5E16D62F0D005D90EC /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
+		9FB8DF6116D6325D005D90EC /* box1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF5F16D6325D005D90EC /* box1.png */; };
+		9FB8DF6216D6325D005D90EC /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF6016D6325D005D90EC /* sky.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DYViewController.mm; sourceTree = "<group>"; };
 		9F9C8DAA16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DYViewController_iPhone.xib; sourceTree = "<group>"; };
 		9F9C8DAD16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DYViewController_iPad.xib; sourceTree = "<group>"; };
+		9FB8DF5F16D6325D005D90EC /* box1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box1.png; sourceTree = "<group>"; };
+		9FB8DF6016D6325D005D90EC /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +64,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FB8DF5D16D62F0D005D90EC /* libBox2DSim.a in Frameworks */,
+				9FB8DF5E16D62F0D005D90EC /* libBox2D.a in Frameworks */,
 				9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */,
-				9F522F0116D21DBA0092735D /* libBox2D.a in Frameworks */,
 				9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */,
 				9F9C8D9116CB437E00B4E1A5 /* CoreGraphics.framework in Frameworks */,
 				9F9C8D9316CB437E00B4E1A5 /* GLKit.framework in Frameworks */,
 				9F9C8D9516CB437E00B4E1A5 /* OpenGLES.framework in Frameworks */,
-				9F37144316D231A800A5CD2A /* libBox2DSim.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +83,7 @@
 				9F37144216D231A800A5CD2A /* libBox2DSim.a */,
 				9F522EFE16D21A800092735D /* libBox2D.a */,
 			);
-			name = Library;
+			path = Library;
 			sourceTree = "<group>";
 		};
 		9F522F0316D21F290092735D /* Engine */ = {
@@ -144,12 +148,22 @@
 		9F9C8D9716CB437E00B4E1A5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9FB8DF5B16D62EA5005D90EC /* Texture */,
 				9F9C8D9816CB437E00B4E1A5 /* Box2DTest-Info.plist */,
 				9F9C8D9916CB437E00B4E1A5 /* InfoPlist.strings */,
 				9F9C8D9C16CB437E00B4E1A5 /* main.m */,
 				9F9C8D9E16CB437E00B4E1A5 /* Box2DTest-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9FB8DF5B16D62EA5005D90EC /* Texture */ = {
+			isa = PBXGroup;
+			children = (
+				9FB8DF5F16D6325D005D90EC /* box1.png */,
+				9FB8DF6016D6325D005D90EC /* sky.png */,
+			);
+			path = Texture;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +222,8 @@
 				9F9C8DAB16CB437E00B4E1A5 /* DYViewController_iPhone.xib in Resources */,
 				9F9C8DAE16CB437E00B4E1A5 /* DYViewController_iPad.xib in Resources */,
 				9F522EFD16D215370092735D /* Box2D in Resources */,
+				9FB8DF6116D6325D005D90EC /* box1.png in Resources */,
+				9FB8DF6216D6325D005D90EC /* sky.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +332,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -333,6 +350,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
