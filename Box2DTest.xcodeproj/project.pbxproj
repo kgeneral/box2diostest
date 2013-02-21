@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F37144316D231A800A5CD2A /* libBox2DSim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37144216D231A800A5CD2A /* libBox2DSim.a */; };
+		9F522EFD16D215370092735D /* Box2D in Resources */ = {isa = PBXBuildFile; fileRef = 9F522EFC16D215370092735D /* Box2D */; };
+		9F522F0116D21DBA0092735D /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
+		9F522F0616D21F290092735D /* Engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0416D21F290092735D /* Engine.mm */; };
+		9F522F0916D21F680092735D /* Rectangle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0816D21F680092735D /* Rectangle.mm */; };
+		9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D8C16CB437E00B4E1A5 /* UIKit.framework */; };
+		9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D8E16CB437E00B4E1A5 /* Foundation.framework */; };
+		9F9C8D9116CB437E00B4E1A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D9016CB437E00B4E1A5 /* CoreGraphics.framework */; };
+		9F9C8D9316CB437E00B4E1A5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D9216CB437E00B4E1A5 /* GLKit.framework */; };
+		9F9C8D9516CB437E00B4E1A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D9416CB437E00B4E1A5 /* OpenGLES.framework */; };
+		9F9C8D9B16CB437E00B4E1A5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8D9916CB437E00B4E1A5 /* InfoPlist.strings */; };
+		9F9C8D9D16CB437E00B4E1A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8D9C16CB437E00B4E1A5 /* main.m */; };
+		9F9C8DA116CB437E00B4E1A5 /* DYAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA016CB437E00B4E1A5 /* DYAppDelegate.mm */; };
+		9F9C8DA316CB437E00B4E1A5 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA216CB437E00B4E1A5 /* Shader.fsh */; };
+		9F9C8DA516CB437E00B4E1A5 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA416CB437E00B4E1A5 /* Shader.vsh */; };
+		9F9C8DA816CB437E00B4E1A5 /* DYViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */; };
+		9F9C8DAB16CB437E00B4E1A5 /* DYViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA916CB437E00B4E1A5 /* DYViewController_iPhone.xib */; };
+		9F9C8DAE16CB437E00B4E1A5 /* DYViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DAC16CB437E00B4E1A5 /* DYViewController_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9F37144216D231A800A5CD2A /* libBox2DSim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2DSim.a; sourceTree = "<group>"; };
+		9F522EFC16D215370092735D /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Box2D; sourceTree = "<group>"; };
+		9F522EFE16D21A800092735D /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
+		9F522F0416D21F290092735D /* Engine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Engine.mm; sourceTree = "<group>"; };
+		9F522F0516D21F290092735D /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		9F522F0716D21F680092735D /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
+		9F522F0816D21F680092735D /* Rectangle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Rectangle.mm; sourceTree = "<group>"; };
+		9F9C8D8816CB437E00B4E1A5 /* Box2DTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2DTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9C8D8C16CB437E00B4E1A5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9F9C8D8E16CB437E00B4E1A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9F9C8D9016CB437E00B4E1A5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9F9C8D9216CB437E00B4E1A5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		9F9C8D9416CB437E00B4E1A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		9F9C8D9816CB437E00B4E1A5 /* Box2DTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Box2DTest-Info.plist"; sourceTree = "<group>"; };
+		9F9C8D9A16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9F9C8D9C16CB437E00B4E1A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9F9C8D9E16CB437E00B4E1A5 /* Box2DTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Box2DTest-Prefix.pch"; sourceTree = "<group>"; };
+		9F9C8D9F16CB437E00B4E1A5 /* DYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYAppDelegate.h; sourceTree = "<group>"; };
+		9F9C8DA016CB437E00B4E1A5 /* DYAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DYAppDelegate.mm; sourceTree = "<group>"; };
+		9F9C8DA216CB437E00B4E1A5 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		9F9C8DA416CB437E00B4E1A5 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		9F9C8DA616CB437E00B4E1A5 /* DYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYViewController.h; sourceTree = "<group>"; };
+		9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DYViewController.mm; sourceTree = "<group>"; };
+		9F9C8DAA16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DYViewController_iPhone.xib; sourceTree = "<group>"; };
+		9F9C8DAD16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DYViewController_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F9C8D8516CB437E00B4E1A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */,
+				9F522F0116D21DBA0092735D /* libBox2D.a in Frameworks */,
+				9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */,
+				9F9C8D9116CB437E00B4E1A5 /* CoreGraphics.framework in Frameworks */,
+				9F9C8D9316CB437E00B4E1A5 /* GLKit.framework in Frameworks */,
+				9F9C8D9516CB437E00B4E1A5 /* OpenGLES.framework in Frameworks */,
+				9F37144316D231A800A5CD2A /* libBox2DSim.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9F522EF916D214E30092735D /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				9F37144216D231A800A5CD2A /* libBox2DSim.a */,
+				9F522EFE16D21A800092735D /* libBox2D.a */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		9F522F0316D21F290092735D /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9F522F0716D21F680092735D /* Rectangle.h */,
+				9F522F0816D21F680092735D /* Rectangle.mm */,
+				9F522F0416D21F290092735D /* Engine.mm */,
+				9F522F0516D21F290092735D /* Engine.h */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		9F9C8D7D16CB437E00B4E1A5 = {
+			isa = PBXGroup;
+			children = (
+				9F522F0316D21F290092735D /* Engine */,
+				9F522EF916D214E30092735D /* Library */,
+				9F9C8D9616CB437E00B4E1A5 /* Box2DTest */,
+				9F9C8D8B16CB437E00B4E1A5 /* Frameworks */,
+				9F9C8D8916CB437E00B4E1A5 /* Products */,
+				9F522EFC16D215370092735D /* Box2D */,
+			);
+			sourceTree = "<group>";
+		};
+		9F9C8D8916CB437E00B4E1A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F9C8D8816CB437E00B4E1A5 /* Box2DTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F9C8D8B16CB437E00B4E1A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F9C8D8C16CB437E00B4E1A5 /* UIKit.framework */,
+				9F9C8D8E16CB437E00B4E1A5 /* Foundation.framework */,
+				9F9C8D9016CB437E00B4E1A5 /* CoreGraphics.framework */,
+				9F9C8D9216CB437E00B4E1A5 /* GLKit.framework */,
+				9F9C8D9416CB437E00B4E1A5 /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F9C8D9616CB437E00B4E1A5 /* Box2DTest */ = {
+			isa = PBXGroup;
+			children = (
+				9F9C8D9F16CB437E00B4E1A5 /* DYAppDelegate.h */,
+				9F9C8DA016CB437E00B4E1A5 /* DYAppDelegate.mm */,
+				9F9C8DA216CB437E00B4E1A5 /* Shader.fsh */,
+				9F9C8DA416CB437E00B4E1A5 /* Shader.vsh */,
+				9F9C8DA616CB437E00B4E1A5 /* DYViewController.h */,
+				9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */,
+				9F9C8DA916CB437E00B4E1A5 /* DYViewController_iPhone.xib */,
+				9F9C8DAC16CB437E00B4E1A5 /* DYViewController_iPad.xib */,
+				9F9C8D9716CB437E00B4E1A5 /* Supporting Files */,
+			);
+			path = Box2DTest;
+			sourceTree = "<group>";
+		};
+		9F9C8D9716CB437E00B4E1A5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9F9C8D9816CB437E00B4E1A5 /* Box2DTest-Info.plist */,
+				9F9C8D9916CB437E00B4E1A5 /* InfoPlist.strings */,
+				9F9C8D9C16CB437E00B4E1A5 /* main.m */,
+				9F9C8D9E16CB437E00B4E1A5 /* Box2DTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F9C8D8716CB437E00B4E1A5 /* Box2DTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F9C8DB116CB437E00B4E1A5 /* Build configuration list for PBXNativeTarget "Box2DTest" */;
+			buildPhases = (
+				9F9C8D8416CB437E00B4E1A5 /* Sources */,
+				9F9C8D8516CB437E00B4E1A5 /* Frameworks */,
+				9F9C8D8616CB437E00B4E1A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Box2DTest;
+			productName = Box2DTest;
+			productReference = 9F9C8D8816CB437E00B4E1A5 /* Box2DTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F9C8D7F16CB437E00B4E1A5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 9F9C8D8216CB437E00B4E1A5 /* Build configuration list for PBXProject "Box2DTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9F9C8D7D16CB437E00B4E1A5;
+			productRefGroup = 9F9C8D8916CB437E00B4E1A5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9F9C8D8716CB437E00B4E1A5 /* Box2DTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F9C8D8616CB437E00B4E1A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9C8D9B16CB437E00B4E1A5 /* InfoPlist.strings in Resources */,
+				9F9C8DA316CB437E00B4E1A5 /* Shader.fsh in Resources */,
+				9F9C8DA516CB437E00B4E1A5 /* Shader.vsh in Resources */,
+				9F9C8DAB16CB437E00B4E1A5 /* DYViewController_iPhone.xib in Resources */,
+				9F9C8DAE16CB437E00B4E1A5 /* DYViewController_iPad.xib in Resources */,
+				9F522EFD16D215370092735D /* Box2D in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9F9C8D8416CB437E00B4E1A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9C8D9D16CB437E00B4E1A5 /* main.m in Sources */,
+				9F9C8DA116CB437E00B4E1A5 /* DYAppDelegate.mm in Sources */,
+				9F9C8DA816CB437E00B4E1A5 /* DYViewController.mm in Sources */,
+				9F522F0616D21F290092735D /* Engine.mm in Sources */,
+				9F522F0916D21F680092735D /* Rectangle.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9F9C8D9916CB437E00B4E1A5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F9C8D9A16CB437E00B4E1A5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9F9C8DA916CB437E00B4E1A5 /* DYViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F9C8DAA16CB437E00B4E1A5 /* en */,
+			);
+			name = DYViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		9F9C8DAC16CB437E00B4E1A5 /* DYViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F9C8DAD16CB437E00B4E1A5 /* en */,
+			);
+			name = DYViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9F9C8DAF16CB437E00B4E1A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/Users/dae-yeongkim/Documents/workspace_cpp/Box2DTest/";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F9C8DB016CB437E00B4E1A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/Users/dae-yeongkim/Documents/workspace_cpp/Box2DTest/";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F9C8DB216CB437E00B4E1A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Box2DTest/Box2DTest-Prefix.pch";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				INFOPLIST_FILE = "Box2DTest/Box2DTest-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9F9C8DB316CB437E00B4E1A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Box2DTest/Box2DTest-Prefix.pch";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				INFOPLIST_FILE = "Box2DTest/Box2DTest-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9F9C8D8216CB437E00B4E1A5 /* Build configuration list for PBXProject "Box2DTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F9C8DAF16CB437E00B4E1A5 /* Debug */,
+				9F9C8DB016CB437E00B4E1A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F9C8DB116CB437E00B4E1A5 /* Build configuration list for PBXNativeTarget "Box2DTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F9C8DB216CB437E00B4E1A5 /* Debug */,
+				9F9C8DB316CB437E00B4E1A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9F9C8D7F16CB437E00B4E1A5 /* Project object */;
+}
