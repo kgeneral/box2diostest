@@ -18,6 +18,8 @@ void Engine::_addBox(Rectangle* rect){
 	bodyDef.position.Set(pos[0], pos[1]);
 	b2Body* newBody = _world->CreateBody(&bodyDef);
 
+    newBody->ApplyForce(*(new b2Vec2(0, -1000)), newBody->GetWorldCenter());
+
 	//LOGI("# of bodies : %d", _world->GetBodyCount());
 
 	b2PolygonShape dynamicBox;

@@ -38,6 +38,7 @@ std::list<Rectangle*> groundList;
 std::list<Rectangle*> boxList;
 
 double pastms = [[NSDate date] timeIntervalSince1970];
+double generateInterval = 0.0f;
 
 @interface DYViewController () {
     
@@ -146,6 +147,10 @@ double pastms = [[NSDate date] timeIntervalSince1970];
     CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];    
 }
+- (void)makeBox:(float)x y:(float)y {
+    
+    boxList.push_front(engine->addBox(x, y, 0.5f, 0.5f));
+}
 
 - (void)viewDidLoad
 {
@@ -161,9 +166,7 @@ double pastms = [[NSDate date] timeIntervalSince1970];
     groundList.push_front(engine->addGround(5.0f, 2.0f, 1.0f, 0.2f));
     groundList.push_front(engine->addGround(4.0f, -1.0f, 1.0f, 0.2f));
     
-    for (GLfloat delta = 0; delta < 300.0f; delta+=6.0f ) {
-        boxList.push_front(engine->addBox(-0.5f, 8.0f + delta, 0.8f, 0.8f));
-    }        
+    
     //        [self setupGL];
     [self setupLayer];
     [self setupContext];
@@ -196,56 +199,6 @@ double pastms = [[NSDate date] timeIntervalSince1970];
         boxList.pop_front();
     }
     delete engine;
-}
-- (void)dealloc
-{
-    //[super dealloc];
-    
-    //[super viewDidUnload];
-    
-    // clean maked box
-    Rectangle* rect;
-    while (!groundList.empty()) {
-        rect = groundList.front();
-        delete rect;
-        groundList.pop_front();
-    }
-    while (!boxList.empty()) {
-        rect = boxList.front();
-        delete rect;
-        boxList.pop_front();
-    }
-    delete engine;
-    
-    
-    [self tearDownGL];
-    
-    if ([EAGLContext currentContext] == self.context) {
-        [EAGLContext setCurrentContext:nil];
-    }
-	self.context = nil;
-    
-}
-/*
-
-- (void)viewDidUnload
-{    
-    [super viewDidUnload];
-    
-    // clean maked box
-    Rectangle* rect;
-    while (!groundList.empty()) {
-        rect = groundList.front();
-        delete rect;
-        groundList.pop_front();
-    }
-    while (!boxList.empty()) {
-        rect = boxList.front();
-        delete rect;
-        boxList.pop_front();
-    }
-    delete engine;
-    
     
     [self tearDownGL];
     
@@ -254,13 +207,6 @@ double pastms = [[NSDate date] timeIntervalSince1970];
     }
 	self.context = nil;
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc. that aren't in use.
-}
-*/
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -319,7 +265,7 @@ double pastms = [[NSDate date] timeIntervalSince1970];
     // 3
     CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
     
-    //CGContextRelease(spriteContext);
+    CGContextRelease(spriteContext);
     
     NSLog(@"width %lu height %lu", width, height);
     
@@ -358,44 +304,6 @@ double pastms = [[NSDate date] timeIntervalSince1970];
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods
-
-
-
-- (void)update
-{
-    /*
-    //float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    //GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
-    
-    self.effect.transform.projectionMatrix = projectionMatrix;
-    
-    // world coord
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -10.0f);
-    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
-    
-    // local coord
-    // Compute the model view matrix for the object rendered with GLKit
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
-    modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
-    
-    self.effect.transform.modelviewMatrix = modelViewMatrix;
-
-    // local coord
-    // Compute the model view matrix for the object rendered with ES2
-    modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 1.5f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
-    modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
-    
-    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
-    
-    _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
-    
-    //_rotation += self.timeSinceLastUpdate * 0.5f;
-    
-*/
-    
-}
 
 -(void) drawSky {
     GLfloat vertices[] = { -10.0f,  -10.0f,        // vertices 0 
@@ -498,9 +406,19 @@ double pastms = [[NSDate date] timeIntervalSince1970];
     //print fps
     double curms = [[NSDate date] timeIntervalSince1970];
     double intervalms = curms - pastms;
-    //    NSLog(@"time interval %f", intervalms);
-    NSLog(@"fps = %f", 1 / intervalms);
+    //NSLog(@"fps = %f", 1 / intervalms);
     pastms = curms;
+    
+    //check interval
+    generateInterval += intervalms;
+    if(generateInterval > 0.05f) {
+        int a = arc4random() % 1000;
+        float x = (float)(a - 500.0f) / 100.0f;
+        NSLog(@"total : %lu, new box = %f %f",boxList.size(), x, 50.0f);
+        [self makeBox:x y:50.0f];
+        generateInterval = 0.0f;
+        NSLog(@"fps = %f", 1 / intervalms);
+    }
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
