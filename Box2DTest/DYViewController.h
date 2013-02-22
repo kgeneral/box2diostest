@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GLKit/GLKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
 
-@interface DYViewController : GLKViewController
+@interface DYViewController : UIViewController
 -(GLuint) CreateTexture2D:(NSString *) fileName;
 @end

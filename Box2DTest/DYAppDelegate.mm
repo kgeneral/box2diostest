@@ -17,8 +17,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[DYViewController alloc] initWithNibName:@"DYViewController_iPhone" bundle:nil];
     } else {
@@ -26,6 +28,14 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    /*
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];    
+    self.glView = [[DYViewController alloc] initWithFrame:screenBounds] ;
+    [self.window addSubview:_glView];
+    [self.window makeKeyAndVisible];
+     
+     
+     */
     return YES;
 }
 

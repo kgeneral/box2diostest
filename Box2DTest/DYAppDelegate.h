@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DYViewController.h"
 
 @class DYViewController;
 
-@interface DYAppDelegate : UIResponder <UIApplicationDelegate>
+@interface DYAppDelegate : UIResponder <UIApplicationDelegate> {
+    DYViewController* _glView;
+}
 
 @property (strong, nonatomic) UIWindow *window;
-
 @property (strong, nonatomic) DYViewController *viewController;
+
 
 @end

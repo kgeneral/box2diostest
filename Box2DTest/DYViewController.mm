@@ -32,64 +32,30 @@ enum
     NUM_ATTRIBUTES
 };
 
-GLfloat gCubeVertexData[216] = 
-{
-    // Data layout for each line below is:
-    // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-    0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
-    
-    0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
-    
-    -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,
-    
-    -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
-    
-    0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,
-    
-    0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f
-};
-
-//b2World* _world;
 Engine* engine;
 
 std::list<Rectangle*> groundList;
 std::list<Rectangle*> boxList;
 
+double pastms = [[NSDate date] timeIntervalSince1970];
+
 @interface DYViewController () {
+    
+    CAEAGLLayer* _eaglLayer;
+    EAGLContext* _context;
+    GLuint _colorRenderBuffer;
+    GLuint _positionSlot;
+    GLuint _colorSlot;
+    GLuint _projectionUniform;
+    GLuint _modelViewUniform;
+    float _currentRotation;
+    GLuint _depthRenderBuffer;
+    
+    
     GLuint _program;
     
-    GLKMatrix4 _modelViewProjectionMatrix;
-    GLKMatrix3 _normalMatrix;
+    //GLKMatrix4 _modelViewProjectionMatrix;
+    //GLKMatrix3 _normalMatrix;
     float _rotation;
     
     GLuint _vertexArray;
@@ -104,7 +70,7 @@ std::list<Rectangle*> boxList;
     GLuint skyTextureId;
 }
 @property (strong, nonatomic) EAGLContext *context;
-@property (strong, nonatomic) GLKBaseEffect *effect;
+//@property (strong, nonatomic) GLKBaseEffect *effect;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -118,22 +84,74 @@ std::list<Rectangle*> boxList;
 @implementation DYViewController
 
 @synthesize context = _context;
-@synthesize effect = _effect;
+//@synthesize effect = _effect;
+
+
+- (void)setupLayer {
+    _eaglLayer = (CAEAGLLayer*) self.view.layer;
+    _eaglLayer.opaque = YES;
+}
+- (void)setupContext {   
+    EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES2;
+    _context = [[EAGLContext alloc] initWithAPI:api];
+    if (!_context) {
+        NSLog(@"Failed to initialize OpenGLES 2.0 context");
+        exit(1);
+    }
+    
+    if (![EAGLContext setCurrentContext:_context]) {
+        NSLog(@"Failed to set current OpenGL context");
+        exit(1);
+    }
+}
+- (void)setupRenderBuffer {
+    glGenRenderbuffers(1, &_colorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);        
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:_eaglLayer];    
+}
+
+- (void)setupDepthBuffer {
+    glGenRenderbuffers(1, &_depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, self.view.frame.size.width, self.view.frame.size.height);    
+}
+- (void)setupFrameBuffer {    
+    GLuint framebuffer;
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+}
+
+- (void)setupVBOs {
+ /*   
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &_vertexBuffer2);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer2);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices2), Vertices2, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &_indexBuffer2);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer2);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices2), Indices2, GL_STATIC_DRAW);
+   */ 
+}
+- (void)setupDisplayLink {
+    CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(render:)];
+    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];    
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-
-    if (!self.context) {
-        NSLog(@"Failed to create ES context");
-    }
-    
-    GLKView *view = (GLKView *)self.view;
-    view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-        
+    pastms = [[NSDate date] timeIntervalSince1970];
     //setup engine
     engine = new Engine();
     
@@ -145,10 +163,70 @@ std::list<Rectangle*> boxList;
     
     for (GLfloat delta = 0; delta < 300.0f; delta+=6.0f ) {
         boxList.push_front(engine->addBox(-0.5f, 8.0f + delta, 0.8f, 0.8f));
-    }
+    }        
+    //        [self setupGL];
+    [self setupLayer];
+    [self setupContext];
+    [self setupDepthBuffer];
+    [self setupRenderBuffer];        
+    [self setupFrameBuffer];
+    [self loadShaders];
+    //[self compileShaders];
+    //[self setupVBOs];
+    [self setupDisplayLink];
     
-    [self setupGL];
+    boxTextureId = [self CreateTexture2D:@"box1.png"];
+    skyTextureId = [self CreateTexture2D:@"sky.png"];
 }
+
+- (void)viewDidUnload
+{    
+    [super viewDidUnload];
+    
+    // clean maked box
+    Rectangle* rect;
+    while (!groundList.empty()) {
+        rect = groundList.front();
+        delete rect;
+        groundList.pop_front();
+    }
+    while (!boxList.empty()) {
+        rect = boxList.front();
+        delete rect;
+        boxList.pop_front();
+    }
+    delete engine;
+}
+- (void)dealloc
+{
+    //[super dealloc];
+    
+    //[super viewDidUnload];
+    
+    // clean maked box
+    Rectangle* rect;
+    while (!groundList.empty()) {
+        rect = groundList.front();
+        delete rect;
+        groundList.pop_front();
+    }
+    while (!boxList.empty()) {
+        rect = boxList.front();
+        delete rect;
+        boxList.pop_front();
+    }
+    delete engine;
+    
+    
+    [self tearDownGL];
+    
+    if ([EAGLContext currentContext] == self.context) {
+        [EAGLContext setCurrentContext:nil];
+    }
+	self.context = nil;
+    
+}
+/*
 
 - (void)viewDidUnload
 {    
@@ -182,7 +260,7 @@ std::list<Rectangle*> boxList;
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc. that aren't in use.
 }
-
+*/
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -206,8 +284,7 @@ std::list<Rectangle*> boxList;
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     
-    boxTextureId = [self CreateTexture2D:@"box1.png"];
-    skyTextureId = [self CreateTexture2D:@"sky.png"];
+
     
     //glViewport(0, 0, w, h);
     //glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
@@ -272,7 +349,7 @@ std::list<Rectangle*> boxList;
     glDeleteBuffers(1, &_vertexBuffer);
     //glDeleteVertexArraysOES(1, &_vertexArray);
     
-    self.effect = nil;
+    //self.effect = nil;
     
     if (_program) {
         glDeleteProgram(_program);
@@ -282,11 +359,13 @@ std::list<Rectangle*> boxList;
 
 #pragma mark - GLKView and GLKViewController delegate methods
 
+
+
 - (void)update
 {
-    
-    float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
+    /*
+    //float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
+    //GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
     
     self.effect.transform.projectionMatrix = projectionMatrix;
     
@@ -314,7 +393,7 @@ std::list<Rectangle*> boxList;
     
     //_rotation += self.timeSinceLastUpdate * 0.5f;
     
-    engine->runStep();
+*/
     
 }
 
@@ -414,23 +493,26 @@ std::list<Rectangle*> boxList;
     glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
     
 }
-
-- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
-{
+- (void)render:(CADisplayLink*)displayLink {
+    
+    //print fps
+    double curms = [[NSDate date] timeIntervalSince1970];
+    double intervalms = curms - pastms;
+    //    NSLog(@"time interval %f", intervalms);
+    NSLog(@"fps = %f", 1 / intervalms);
+    pastms = curms;
+    
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);   
+    glEnable(GL_DEPTH_TEST);       
     
+    //glUseProgram(_program);
+    glViewport(0, 0, self.view.frame.size.width, self.view.frame.size.height);    
     
-    // 1
-    //glViewport(0, 0, self.view.frame.size.width, self.view.frame.size.height);    
-    // Render the object again with ES2
-    glUseProgram(_program);
-    
-    //[self drawSky];
+    engine->runStep();
     
     //ground
     for (std::list<Rectangle*>::iterator it=groundList.begin(); it!=groundList.end(); ++it) {
@@ -465,8 +547,9 @@ std::list<Rectangle*> boxList;
     }
     
     [self drawSky];
+    
+    [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
-
 #pragma mark -  OpenGL ES 2 shader compilation
 
 - (BOOL)loadShaders
@@ -521,6 +604,8 @@ std::list<Rectangle*> boxList;
         
         return NO;
     }
+    
+    glUseProgram(_program);
     
     gvPositionHandle = glGetAttribLocation(_program, "vPosition");
     gvTextureHandle = glGetAttribLocation(_program, "a_TexCoordinate");

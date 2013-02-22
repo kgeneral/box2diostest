@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F3EFA8016D752CA004CCF56 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3EFA7F16D752CA004CCF56 /* QuartzCore.framework */; };
 		9F522EFD16D215370092735D /* Box2D in Resources */ = {isa = PBXBuildFile; fileRef = 9F522EFC16D215370092735D /* Box2D */; };
 		9F522F0616D21F290092735D /* Engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0416D21F290092735D /* Engine.mm */; };
 		9F522F0916D21F680092735D /* Rectangle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0816D21F680092735D /* Rectangle.mm */; };
+		9F7099BC16D74B1100A33B29 /* libBox2DSim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37144216D231A800A5CD2A /* libBox2DSim.a */; };
+		9F7099BD16D74B1200A33B29 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
 		9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D8C16CB437E00B4E1A5 /* UIKit.framework */; };
 		9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D8E16CB437E00B4E1A5 /* Foundation.framework */; };
 		9F9C8D9116CB437E00B4E1A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C8D9016CB437E00B4E1A5 /* CoreGraphics.framework */; };
@@ -23,8 +26,6 @@
 		9F9C8DA816CB437E00B4E1A5 /* DYViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA716CB437E00B4E1A5 /* DYViewController.mm */; };
 		9F9C8DAB16CB437E00B4E1A5 /* DYViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DA916CB437E00B4E1A5 /* DYViewController_iPhone.xib */; };
 		9F9C8DAE16CB437E00B4E1A5 /* DYViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C8DAC16CB437E00B4E1A5 /* DYViewController_iPad.xib */; };
-		9FB8DF5D16D62F0D005D90EC /* libBox2DSim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37144216D231A800A5CD2A /* libBox2DSim.a */; };
-		9FB8DF5E16D62F0D005D90EC /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
 		9FB8DF6116D6325D005D90EC /* box1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF5F16D6325D005D90EC /* box1.png */; };
 		9FB8DF6216D6325D005D90EC /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF6016D6325D005D90EC /* sky.png */; };
 		9FB8DF6616D63393005D90EC /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB8DF6516D63393005D90EC /* Texture.mm */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		9F37144216D231A800A5CD2A /* libBox2DSim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2DSim.a; sourceTree = "<group>"; };
+		9F3EFA7F16D752CA004CCF56 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F522EFC16D215370092735D /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Box2D; sourceTree = "<group>"; };
 		9F522EFE16D21A800092735D /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
 		9F522F0416D21F290092735D /* Engine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Engine.mm; sourceTree = "<group>"; };
@@ -67,11 +69,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FB8DF5D16D62F0D005D90EC /* libBox2DSim.a in Frameworks */,
-				9FB8DF5E16D62F0D005D90EC /* libBox2D.a in Frameworks */,
+				9F3EFA8016D752CA004CCF56 /* QuartzCore.framework in Frameworks */,
 				9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */,
 				9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */,
 				9F9C8D9116CB437E00B4E1A5 /* CoreGraphics.framework in Frameworks */,
+				9F7099BC16D74B1100A33B29 /* libBox2DSim.a in Frameworks */,
+				9F7099BD16D74B1200A33B29 /* libBox2D.a in Frameworks */,
 				9F9C8D9316CB437E00B4E1A5 /* GLKit.framework in Frameworks */,
 				9F9C8D9516CB437E00B4E1A5 /* OpenGLES.framework in Frameworks */,
 			);
@@ -103,6 +106,7 @@
 		9F9C8D7D16CB437E00B4E1A5 = {
 			isa = PBXGroup;
 			children = (
+				9F3EFA7F16D752CA004CCF56 /* QuartzCore.framework */,
 				9FB8DF6316D63366005D90EC /* Render */,
 				9F522F0316D21F290092735D /* Engine */,
 				9F522EF916D214E30092735D /* Library */,
