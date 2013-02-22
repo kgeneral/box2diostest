@@ -143,7 +143,7 @@ std::list<Rectangle*> boxList;
     groundList.push_front(engine->addGround(5.0f, 2.0f, 1.0f, 0.2f));
     groundList.push_front(engine->addGround(4.0f, -1.0f, 1.0f, 0.2f));
     
-    for (GLfloat delta = 0; delta < 200.0f; delta+=6.0f ) {
+    for (GLfloat delta = 0; delta < 300.0f; delta+=6.0f ) {
         boxList.push_front(engine->addBox(-0.5f, 8.0f + delta, 0.8f, 0.8f));
     }
     
@@ -199,26 +199,15 @@ std::list<Rectangle*> boxList;
     
     [self loadShaders];
     
-    
-    self.effect = [[GLKBaseEffect alloc] init];
-    self.effect.light0.enabled = GL_TRUE;
-    self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
-    
-    
-    
-    //glEnable(GL_DEPTH_TEST);
-    
-    //glGenVertexArraysOES(1, &_vertexArray);
-    //glBindVertexArrayOES(_vertexArray);
+    //self.effect = [[GLKBaseEffect alloc] init];
+    //self.effect.light0.enabled = GL_TRUE;
+    //self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
     
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     
-    
-    //boxTextureId = [self CreateTexture2D:@"tile_floor.png"];
     boxTextureId = [self CreateTexture2D:@"box1.png"];
     skyTextureId = [self CreateTexture2D:@"sky.png"];
-    //skyTextureId = CreateTexture2D(skyTexture);
     
     //glViewport(0, 0, w, h);
     //glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
@@ -257,8 +246,6 @@ std::list<Rectangle*> boxList;
     
     NSLog(@"width %lu height %lu", width, height);
     
-
-    
     // Use tightly packed data
     glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
     
@@ -274,8 +261,6 @@ std::list<Rectangle*> boxList;
     
     // Load the texture
     glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
-    
-
     
     return textureId;
 }
@@ -333,6 +318,103 @@ std::list<Rectangle*> boxList;
     
 }
 
+-(void) drawSky {
+    GLfloat vertices[] = { -10.0f,  -10.0f,        // vertices 0 
+        -10.0f,  30.0f,        // vertices 1
+        10.0f,  30.0f,        // vertices 2
+        10.0f,  -10.0f         // vertices 3
+    };
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
+        0.0f,  1.0f,        // TexCoord 1
+        1.0f,  1.0f,        // TexCoord 2
+        1.0f,  0.0f         // TexCoord 3
+    };
+    // Load the texture coordinate
+    glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
+                          GL_FALSE, 0, texVertices );
+    
+    glEnableVertexAttribArray(gvPositionHandle);   
+    glEnableVertexAttribArray(gvTextureHandle);
+    
+    // Bind the texture
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, skyTextureId );
+    
+    // Set the filtering mode
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    
+    // Set the sampler texture unit to 0
+    glUniform1i ( gvSamplerHandle, 0 );
+    
+    GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
+    glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
+    
+}
+-(void) drawGround:(GLfloat *)vertices {
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
+        0.0f,  3.0f,        // TexCoord 1
+        1.0f,  3.0f,        // TexCoord 2
+        1.0f,  0.0f         // TexCoord 3
+    };
+    // Load the texture coordinate
+    glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
+                          GL_FALSE, 0, texVertices );
+    
+    glEnableVertexAttribArray(gvPositionHandle);   
+    glEnableVertexAttribArray(gvTextureHandle);
+    
+    // Bind the texture
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, boxTextureId );
+    
+    // Set the filtering mode
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    
+    // Set the sampler texture unit to 0
+    glUniform1i ( gvSamplerHandle, 0 );
+    
+    GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
+    glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
+    
+}
+-(void) drawBox:(GLfloat *)vertices {
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
+        0.0f,  1.0f,        // TexCoord 1
+        1.0f,  1.0f,        // TexCoord 2
+        1.0f,  0.0f         // TexCoord 3
+    };
+    // Load the texture coordinate
+    glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
+                          GL_FALSE, 0, texVertices );
+    
+    glEnableVertexAttribArray(gvPositionHandle);   
+    glEnableVertexAttribArray(gvTextureHandle);
+    
+    // Bind the texture
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, boxTextureId );
+    
+    // Set the filtering mode
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    
+    // Set the sampler texture unit to 0
+    glUniform1i ( gvSamplerHandle, 0 );
+    
+    GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
+    glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
+    
+}
+
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -344,11 +426,11 @@ std::list<Rectangle*> boxList;
     
     
     // 1
-    //glViewport(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
-    
+    //glViewport(0, 0, self.view.frame.size.width, self.view.frame.size.height);    
     // Render the object again with ES2
     glUseProgram(_program);
+    
+    //[self drawSky];
     
     //ground
     for (std::list<Rectangle*>::iterator it=groundList.begin(); it!=groundList.end(); ++it) {
@@ -362,35 +444,7 @@ std::list<Rectangle*> boxList;
         (*it)->setRadian(angle);
         
         GLfloat* vertices = (*it)->getRectangleVertices();
-        
-        glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-        GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
-            0.0f,  3.0f,        // TexCoord 1
-            1.0f,  3.0f,        // TexCoord 2
-            1.0f,  0.0f         // TexCoord 3
-        };
-        // Load the texture coordinate
-        glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
-                              GL_FALSE, 0, texVertices );
-        
-        glEnableVertexAttribArray(gvPositionHandle);   
-        glEnableVertexAttribArray(gvTextureHandle);
-        
-        // Bind the texture
-        glActiveTexture ( GL_TEXTURE0 );
-        glBindTexture ( GL_TEXTURE_2D, boxTextureId );
-        
-        // Set the filtering mode
-        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-        
-        // Set the sampler texture unit to 0
-        glUniform1i ( gvSamplerHandle, 0 );
-        
-        GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
-        glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
+        [self drawGround:vertices];
     }
     
     //box
@@ -406,59 +460,12 @@ std::list<Rectangle*> boxList;
         (*it)->setPosition(position.x, position.y);
         (*it)->setRadian(angle);
         
-        GLfloat* vertices = (*it)->getRectangleVertices();
-        
-        glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);   
-        glEnableVertexAttribArray(gvPositionHandle);        
-        
-        GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
-        glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );   
+        GLfloat* vertices = (*it)->getRectangleVertices();  
+        [self drawBox:vertices];
     }
     
+    [self drawSky];
 }
-
--(void) drawGround:(GLfloat *)vertices {
-    //glBindVertexArrayOES(vertices);
-    
-    /*
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    checkGlError("glVertexAttribPointer");
-    
-    GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
-        0.0f,  3.0f,        // TexCoord 1
-        1.0f,  3.0f,        // TexCoord 2
-        1.0f,  0.0f         // TexCoord 3
-    };
-    // Load the texture coordinate
-    glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
-                          GL_FALSE, 0, texVertices );
-    checkGlError("glVertexAttribPointer");
-    
-    glEnableVertexAttribArray(gvPositionHandle);
-    checkGlError("glEnableVertexAttribArray");
-    
-    glEnableVertexAttribArray(gvTextureHandle);
-    checkGlError("glEnableVertexAttribArray");
-    
-    // Bind the texture
-    glActiveTexture ( GL_TEXTURE0 );
-    glBindTexture ( GL_TEXTURE_2D, boxTextureId );
-    
-    // Set the filtering mode
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    
-    // Set the sampler texture unit to 0
-    glUniform1i ( gvSamplerHandle, 0 );
-    */
-    GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
-    glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );
-    //glDrawArrays(GL_TRIANGLES, 0, 4);
-    
-}
-
 
 #pragma mark -  OpenGL ES 2 shader compilation
 
