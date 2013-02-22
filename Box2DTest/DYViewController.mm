@@ -98,6 +98,10 @@ std::list<Rectangle*> boxList;
     GLuint gvPositionHandle;
     GLuint gvTextureHandle;
     GLuint gvSamplerHandle;
+    
+    GLuint boxTextureId;
+    GLuint groundTextureId;
+    GLuint skyTextureId;
 }
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
@@ -129,8 +133,7 @@ std::list<Rectangle*> boxList;
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
-    
+        
     //setup engine
     engine = new Engine();
     
@@ -196,11 +199,11 @@ std::list<Rectangle*> boxList;
     
     [self loadShaders];
     
-    /*
+    
     self.effect = [[GLKBaseEffect alloc] init];
     self.effect.light0.enabled = GL_TRUE;
     self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
-    */
+    
     
     
     //glEnable(GL_DEPTH_TEST);
@@ -210,6 +213,12 @@ std::list<Rectangle*> boxList;
     
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    
+    
+    //boxTextureId = [self CreateTexture2D:@"tile_floor.png"];
+    boxTextureId = [self CreateTexture2D:@"box1.png"];
+    skyTextureId = [self CreateTexture2D:@"sky.png"];
+    //skyTextureId = CreateTexture2D(skyTexture);
     
     //glViewport(0, 0, w, h);
     //glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
@@ -223,12 +232,60 @@ std::list<Rectangle*> boxList;
          */
 }
 
+-(GLuint) CreateTexture2D:(NSString *) fileName {
+    
+    // Texture object handle
+    GLuint textureId;
+    
+    CGImageRef spriteImage = [UIImage imageNamed:fileName].CGImage;
+    if (!spriteImage) {
+        NSLog(@"Failed to load image %@", fileName);
+        exit(1);
+    }
+    
+    size_t width = CGImageGetWidth(spriteImage);
+    size_t height = CGImageGetHeight(spriteImage);
+    GLubyte *spriteData = (GLubyte *) calloc(width*height*4, sizeof(GLubyte));
+    
+    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width*4, 
+                                                       CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);    
+    
+    // 3
+    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
+    
+    //CGContextRelease(spriteContext);
+    
+    NSLog(@"width %lu height %lu", width, height);
+    
+
+    
+    // Use tightly packed data
+    glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
+    
+    // Generate a texture object
+    glGenTextures ( 1, &textureId );
+    
+    // Bind the texture object
+    glBindTexture ( GL_TEXTURE_2D, textureId );
+    
+    // Set the filtering mode
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    
+    // Load the texture
+    glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
+    
+
+    
+    return textureId;
+}
+
 - (void)tearDownGL
 {
     [EAGLContext setCurrentContext:self.context];
     
     glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
+    //glDeleteVertexArraysOES(1, &_vertexArray);
     
     self.effect = nil;
     
@@ -278,22 +335,20 @@ std::list<Rectangle*> boxList;
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);   
     
-//    glBindVertexArrayOES(_vertexArray);
+    
+    // 1
+    //glViewport(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    
     
     // Render the object again with ES2
     glUseProgram(_program);
-    
-    GLfloat pos[8] = {-0.5f, 0.5f, 
-                    0.5f, 0.5f, 
-                    0.5f, -0.5f, 
-                    -0.5f, -0.5f};
-    
-    //glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(pos), pos, GL_STATIC_DRAW);
-
     
     //ground
     for (std::list<Rectangle*>::iterator it=groundList.begin(); it!=groundList.end(); ++it) {
@@ -308,8 +363,31 @@ std::list<Rectangle*> boxList;
         
         GLfloat* vertices = (*it)->getRectangleVertices();
         
-        glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);   
-        glEnableVertexAttribArray(gvPositionHandle);        
+        glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+        GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
+            0.0f,  3.0f,        // TexCoord 1
+            1.0f,  3.0f,        // TexCoord 2
+            1.0f,  0.0f         // TexCoord 3
+        };
+        // Load the texture coordinate
+        glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
+                              GL_FALSE, 0, texVertices );
+        
+        glEnableVertexAttribArray(gvPositionHandle);   
+        glEnableVertexAttribArray(gvTextureHandle);
+        
+        // Bind the texture
+        glActiveTexture ( GL_TEXTURE0 );
+        glBindTexture ( GL_TEXTURE_2D, boxTextureId );
+        
+        // Set the filtering mode
+        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+        glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+        
+        // Set the sampler texture unit to 0
+        glUniform1i ( gvSamplerHandle, 0 );
         
         GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
         glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
@@ -438,8 +516,8 @@ std::list<Rectangle*> boxList;
     }
     
     gvPositionHandle = glGetAttribLocation(_program, "vPosition");
-    //gvTextureHandle = glGetAttribLocation(_program, "a_TexCoordinate");
-    //gvSamplerHandle = glGetAttribLocation(_program, "u_Texture");
+    gvTextureHandle = glGetAttribLocation(_program, "a_TexCoordinate");
+    gvSamplerHandle = glGetAttribLocation(_program, "u_Texture");
     
     
     

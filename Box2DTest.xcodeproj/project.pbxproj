@@ -27,6 +27,8 @@
 		9FB8DF5E16D62F0D005D90EC /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F522EFE16D21A800092735D /* libBox2D.a */; };
 		9FB8DF6116D6325D005D90EC /* box1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF5F16D6325D005D90EC /* box1.png */; };
 		9FB8DF6216D6325D005D90EC /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DF6016D6325D005D90EC /* sky.png */; };
+		9FB8DF6616D63393005D90EC /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB8DF6516D63393005D90EC /* Texture.mm */; };
+		9FB8DFA316D732F6005D90EC /* tile_floor.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB8DFA216D732F6005D90EC /* tile_floor.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,9 @@
 		9F9C8DAD16CB437E00B4E1A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DYViewController_iPad.xib; sourceTree = "<group>"; };
 		9FB8DF5F16D6325D005D90EC /* box1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box1.png; sourceTree = "<group>"; };
 		9FB8DF6016D6325D005D90EC /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
+		9FB8DF6416D63393005D90EC /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		9FB8DF6516D63393005D90EC /* Texture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
+		9FB8DFA216D732F6005D90EC /* tile_floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_floor.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +105,7 @@
 		9F9C8D7D16CB437E00B4E1A5 = {
 			isa = PBXGroup;
 			children = (
+				9FB8DF6316D63366005D90EC /* Render */,
 				9F522F0316D21F290092735D /* Engine */,
 				9F522EF916D214E30092735D /* Library */,
 				9F9C8D9616CB437E00B4E1A5 /* Box2DTest */,
@@ -160,10 +166,20 @@
 		9FB8DF5B16D62EA5005D90EC /* Texture */ = {
 			isa = PBXGroup;
 			children = (
+				9FB8DFA216D732F6005D90EC /* tile_floor.png */,
 				9FB8DF5F16D6325D005D90EC /* box1.png */,
 				9FB8DF6016D6325D005D90EC /* sky.png */,
 			);
 			path = Texture;
+			sourceTree = "<group>";
+		};
+		9FB8DF6316D63366005D90EC /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				9FB8DF6416D63393005D90EC /* Texture.h */,
+				9FB8DF6516D63393005D90EC /* Texture.mm */,
+			);
+			path = Render;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +240,7 @@
 				9F522EFD16D215370092735D /* Box2D in Resources */,
 				9FB8DF6116D6325D005D90EC /* box1.png in Resources */,
 				9FB8DF6216D6325D005D90EC /* sky.png in Resources */,
+				9FB8DFA316D732F6005D90EC /* tile_floor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +256,7 @@
 				9F9C8DA816CB437E00B4E1A5 /* DYViewController.mm in Sources */,
 				9F522F0616D21F290092735D /* Engine.mm in Sources */,
 				9F522F0916D21F680092735D /* Rectangle.mm in Sources */,
+				9FB8DF6616D63393005D90EC /* Texture.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

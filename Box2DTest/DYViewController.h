@@ -11,5 +11,5 @@
 #import <OpenGLES/ES2/gl.h>
 
 @interface DYViewController : GLKViewController
-
+-(GLuint) CreateTexture2D:(NSString *) fileName;
 @end
