@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F3E029B16DB1567004CCF56 /* freetype in Resources */ = {isa = PBXBuildFile; fileRef = 9F3E029916DB1566004CCF56 /* freetype */; };
+		9F3E029E16DB1582004CCF56 /* libFreetype2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3E029C16DB1582004CCF56 /* libFreetype2.a */; };
+		9F3E029F16DB1582004CCF56 /* libFreetype2Sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3E029D16DB1582004CCF56 /* libFreetype2Sim.a */; };
 		9F3EFA8016D752CA004CCF56 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3EFA7F16D752CA004CCF56 /* QuartzCore.framework */; };
 		9F522EFD16D215370092735D /* Box2D in Resources */ = {isa = PBXBuildFile; fileRef = 9F522EFC16D215370092735D /* Box2D */; };
 		9F522F0616D21F290092735D /* Engine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F522F0416D21F290092735D /* Engine.mm */; };
@@ -33,10 +36,14 @@
 
 /* Begin PBXFileReference section */
 		9F37144216D231A800A5CD2A /* libBox2DSim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2DSim.a; sourceTree = "<group>"; };
+		9F3E029916DB1566004CCF56 /* freetype */ = {isa = PBXFileReference; lastKnownFileType = folder; name = freetype; path = freetype/freetype; sourceTree = "<group>"; };
+		9F3E029A16DB1567004CCF56 /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ft2build.h; path = freetype/ft2build.h; sourceTree = "<group>"; };
+		9F3E029C16DB1582004CCF56 /* libFreetype2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFreetype2.a; sourceTree = "<group>"; };
+		9F3E029D16DB1582004CCF56 /* libFreetype2Sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFreetype2Sim.a; sourceTree = "<group>"; };
 		9F3EFA7F16D752CA004CCF56 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F522EFC16D215370092735D /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Box2D; sourceTree = "<group>"; };
 		9F522EFE16D21A800092735D /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
-		9F522F0416D21F290092735D /* Engine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Engine.mm; sourceTree = "<group>"; };
+		9F522F0416D21F290092735D /* Engine.mm */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.cpp.objcpp; path = Engine.mm; sourceTree = "<group>"; };
 		9F522F0516D21F290092735D /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
 		9F522F0716D21F680092735D /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
 		9F522F0816D21F680092735D /* Rectangle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Rectangle.mm; sourceTree = "<group>"; };
@@ -69,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F3E029E16DB1582004CCF56 /* libFreetype2.a in Frameworks */,
+				9F3E029F16DB1582004CCF56 /* libFreetype2Sim.a in Frameworks */,
 				9F3EFA8016D752CA004CCF56 /* QuartzCore.framework in Frameworks */,
 				9F9C8D8D16CB437E00B4E1A5 /* UIKit.framework in Frameworks */,
 				9F9C8D8F16CB437E00B4E1A5 /* Foundation.framework in Frameworks */,
@@ -86,6 +95,8 @@
 		9F522EF916D214E30092735D /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9F3E029C16DB1582004CCF56 /* libFreetype2.a */,
+				9F3E029D16DB1582004CCF56 /* libFreetype2Sim.a */,
 				9F37144216D231A800A5CD2A /* libBox2DSim.a */,
 				9F522EFE16D21A800092735D /* libBox2D.a */,
 			);
@@ -113,6 +124,8 @@
 				9F9C8D9616CB437E00B4E1A5 /* Box2DTest */,
 				9F9C8D8B16CB437E00B4E1A5 /* Frameworks */,
 				9F9C8D8916CB437E00B4E1A5 /* Products */,
+				9F3E029A16DB1567004CCF56 /* ft2build.h */,
+				9F3E029916DB1566004CCF56 /* freetype */,
 				9F522EFC16D215370092735D /* Box2D */,
 			);
 			sourceTree = "<group>";
@@ -241,6 +254,7 @@
 				9F522EFD16D215370092735D /* Box2D in Resources */,
 				9FB8DF6116D6325D005D90EC /* box1.png in Resources */,
 				9FB8DF6216D6325D005D90EC /* sky.png in Resources */,
+				9F3E029B16DB1567004CCF56 /* freetype in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,9 @@
 //stl box list
 #import <list>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 // Uniform index.
@@ -401,6 +404,10 @@ double generateInterval = 0.0f;
     glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );        
     
 }
+
+FT_Library  library;
+FT_Face     face;
+
 - (void)render:(CADisplayLink*)displayLink {
     
     //print fps
@@ -411,7 +418,7 @@ double generateInterval = 0.0f;
     
     //check interval
     generateInterval += intervalms;
-    if(generateInterval > 0.05f) {
+    if(generateInterval > 0.01f) {
         int a = arc4random() % 1000;
         float x = (float)(a - 500.0f) / 100.0f;
         NSLog(@"total : %lu, new box = %f %f",boxList.size(), x, 50.0f);
@@ -419,6 +426,59 @@ double generateInterval = 0.0f;
         generateInterval = 0.0f;
         NSLog(@"fps = %f", 1 / intervalms);
     }
+    
+    int error = FT_Init_FreeType( &library );
+    if ( error )
+    {
+        //... an error occurred during library initialization ...
+        NSLog(@"... an error occurred during library initialization ...");
+    }
+    error = FT_New_Face( library,
+//                        "/usr/share/fonts/truetype/arial.ttf",
+                        "/System/Library/Fonts/AppleGothic.ttf",
+                        0,
+                        &face );
+    if ( error == FT_Err_Unknown_File_Format )
+    {
+        //... the font file could be opened and read, but it appears
+        //... that its font format is unsupported
+        NSLog(@"... the font file could be opened and read, but it appears that its font format is unsupported...");
+    }
+    else if ( error )
+    {
+        //... another error code means that the font file could not
+        //... be opened or read, or simply that it is broken...
+        NSLog(@"... another error code means that the font file could not be opened or read, or simply that it is broken...");
+    }
+    
+    FT_GlyphSlot  slot = face->glyph;  /* a small shortcut */
+    int           pen_x, pen_y, n;
+    
+    pen_x = 300;
+    pen_y = 200;
+    
+    FT_UInt  glyph_index;
+    char text[] = "test test test test";
+    
+    /* retrieve glyph index from character code */
+    glyph_index = FT_Get_Char_Index( face, text[0] );
+    
+    /* load glyph image into the slot (erase previous one) */
+    error = FT_Load_Glyph( face, glyph_index, FT_LOAD_DEFAULT );
+    if ( error ) {}
+    
+    /* convert to an anti-aliased bitmap */
+    error = FT_Render_Glyph( face->glyph, FT_RENDER_MODE_NORMAL );
+    if ( error ) {}
+    
+    /* now, draw to our target surface */
+    //my_draw_bitmap( &slot->bitmap,
+    //               pen_x + slot->bitmap_left,
+    //               pen_y - slot->bitmap_top );
+    
+    /* increment pen position */
+    pen_x += slot->advance.x >> 6;
+    pen_y += slot->advance.y >> 6; /* not useful for now */    
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
