@@ -72,8 +72,11 @@ double generateInterval = 0.0f;
     GLuint boxTextureId;
     GLuint groundTextureId;
     GLuint skyTextureId;
+    
+//    GLuint textBitmapTextureId;
 }
 @property (strong, nonatomic) EAGLContext *context;
+@property (nonatomic, strong) UILabel *debug;
 //@property (strong, nonatomic) GLKBaseEffect *effect;
 
 - (void)setupGL;
@@ -87,9 +90,16 @@ double generateInterval = 0.0f;
 
 @implementation DYViewController
 
+@synthesize debug;
 @synthesize context = _context;
 //@synthesize effect = _effect;
 
+- (void)_debug_data:(float)fps box_num:(int)box_num {
+    self.debug.text = [NSString stringWithFormat:@"fps : %f, box : %d", fps, box_num];
+}
+- (void)_debug_message:(NSString *)message {
+    self.debug.text = @"test";
+}
 
 - (void)setupLayer {
     _eaglLayer = (CAEAGLLayer*) self.view.layer;
@@ -159,6 +169,15 @@ double generateInterval = 0.0f;
 {
     [super viewDidLoad];
     
+    // add debug label
+    CGRect sumFrame = CGRectMake(50, 50, 300, 30);
+    self.debug = [[UILabel alloc] initWithFrame:sumFrame];
+    self.debug.text = @"debug";
+    self.debug.font = [UIFont boldSystemFontOfSize:15];
+    self.debug.textAlignment = UITextAlignmentLeft;
+    self.debug.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.debug];
+    
     pastms = [[NSDate date] timeIntervalSince1970];
     //setup engine
     engine = new Engine();
@@ -168,7 +187,6 @@ double generateInterval = 0.0f;
     groundList.push_front(engine->addGround(-2.0f, 2.0f, 1.0f, 0.2f));
     groundList.push_front(engine->addGround(5.0f, 2.0f, 1.0f, 0.2f));
     groundList.push_front(engine->addGround(4.0f, -1.0f, 1.0f, 0.2f));
-    
     
     //        [self setupGL];
     [self setupLayer];
@@ -288,6 +306,8 @@ double generateInterval = 0.0f;
     // Load the texture
     glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
     
+    free(spriteData);
+    
     return textureId;
 }
 
@@ -405,8 +425,183 @@ double generateInterval = 0.0f;
     
 }
 
-FT_Library  library;
-FT_Face     face;
+-(void) drawText:(float) fps{
+     /*
+    
+    
+    //render
+    
+    GLfloat vertices[] = { -10.0f,  -6.0f,        // vertices 0 
+        -10.0f,  -4.0f,        // vertices 1
+        10.0f,  -4.0f,        // vertices 2
+        10.0f,  -6.0f         // vertices 3
+    };
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    GLfloat texVertices[] = { 0.0f,  0.0f,        // TexCoord 0 
+        0.0f,  1.0f,        // TexCoord 1
+        1.0f,  1.0f,        // TexCoord 2
+        1.0f,  0.0f         // TexCoord 3
+    };
+    // Load the texture coordinate
+    glVertexAttribPointer(gvTextureHandle, 2, GL_FLOAT,
+                          GL_FALSE, 0, texVertices );
+    
+    glEnableVertexAttribArray(gvPositionHandle);   
+    glEnableVertexAttribArray(gvTextureHandle);
+    
+    
+
+    // Bind the texture
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, textBitmapTextureId );
+    
+    // Set the filtering mode
+    //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    
+    // Set the sampler texture unit to 0
+    glUniform1i ( gvSamplerHandle, 0 );
+    
+    GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
+    glDrawElements ( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices );   
+      */
+    
+}
+
+/*
+ 
+ // Texture object handle
+ GLuint textureId;
+ 
+ CGImageRef spriteImage = [UIImage imageNamed:fileName].CGImage;
+ if (!spriteImage) {
+ NSLog(@"Failed to load image %@", fileName);
+ exit(1);
+ }
+ 
+ size_t width = CGImageGetWidth(spriteImage);
+ size_t height = CGImageGetHeight(spriteImage);
+ GLubyte *spriteData = (GLubyte *) calloc(width*height*4, sizeof(GLubyte));
+ 
+ CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width*4, 
+ CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);    
+ 
+ // 3
+ CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
+ 
+ CGContextRelease(spriteContext);
+ 
+ NSLog(@"width %lu height %lu", width, height);
+ 
+ // Use tightly packed data
+ glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
+ 
+ // Generate a texture object
+ glGenTextures ( 1, &textureId );
+ 
+ // Bind the texture object
+ glBindTexture ( GL_TEXTURE_2D, textureId );
+ 
+ // Set the filtering mode
+ glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+ //glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+ 
+ // Load the texture
+ glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
+ 
+ free(spriteData);
+ 
+ return textureId;
+ 
+ 
+ http://developer.apple.com/library/ios/#documentation/uikit/reference/NSString_UIKit_Additions/Reference/Reference.html
+ UIStringDrawing
+ 
+ 
+ if (_contextBuffer == NULL) {
+ _contextBuffer = calloc(height, width);
+ }
+ CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+ _context = CGBitmapContextCreate(_contextBuffer, width, height, 8, width, colorSpace, kCGImageAlphaOnly);
+ CGColorSpaceRelease(colorSpace);
+ 
+ 
+ //
+ 
+ 
+ UIGraphicsPushContext(_context);
+ 
+ NSString* platformText = @"test";
+ UITextAlignment platformAlignment = textAlignmentPlatform(_textAlignment);
+ UILineBreakMode platformLineBreakMode = textLineBreakModePlatform(_textLineBreakMode);
+ 
+ CGRect r = CGRectMake(0, 0, _width, _height);
+ 
+ Size2D textSize = sizeMt([platformText drawInRect:r withFont:font lineBreakMode:platformLineBreakMode alignment:platformAlignment]);
+ 
+ // there's a bug if texts are single line
+ tstring tstr = tstring(_text->getCStr());
+ size_t newLinePos = tstr.find(_T("\n"));
+ bool singleLine = newLinePos == tstring::npos;
+ if (singleLine) {
+ textSize = Size2D(textSize.getW(), textSize.getH() - 2.0f);
+ }
+ 
+ UIGraphicsPopContext();
+ 
+ 
+ // 이렇게 하시고 나면 _contextBuffer 에 이미지 데이터가 들어갑니다. 
+ 
+ //NSString text 
+ 
+ size_t width = 100;
+ size_t height = 100;
+ GLubyte *_textContextBuffer;
+ 
+ if (_textContextBuffer == NULL) {
+ _textContextBuffer = (GLubyte *)calloc(height, width);
+ }
+ CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+ CGContextRef textSpriteContext = CGBitmapContextCreate(_textContextBuffer, width, height, 8, width, colorSpace, kCGImageAlphaOnly);
+ CGColorSpaceRelease(colorSpace);
+ 
+ //    NSLog(@"fps = %f", 1 / intervalms);
+ 
+ UIGraphicsPushContext(UIGraphicsGetCurrentContext());
+ 
+ NSString* platformText = @"test";
+ //UITextAlignment platformAlignment = textAlignmentPlatform(_textAlignment);
+ //UILineBreakMode platformLineBreakMode = textLineBreakModePlatform(_textLineBreakMode);
+ 
+ CGRect r = CGRectMake(0, 0, width, height);
+ 
+ //Size2D textSize = sizeMt([platformText drawInRect:r withFont:font lineBreakMode:nil alignment:nil]);
+ 
+ // there's a bug if texts are single line
+ 
+ tstring tstr = tstring(_text->getCStr());
+ size_t newLinePos = tstr.find(_T("\n"));
+ bool singleLine = newLinePos == tstring::npos;
+ if (singleLine) {
+ textSize = Size2D(textSize.getW(), textSize.getH() - 2.0f);
+ }
+ 
+ UIGraphicsPopContext();
+ 
+ 
+ UIFont *font = [UIFont systemFontOfSize:16.0];
+ [platformText drawAtPoint:CGPointMake(0, 0) withFont:font];
+ 
+ 
+ 
+ 
+ // _textContextBuffer 에 이미지 데이터가 들어감
+ 
+
+ */
+
 
 - (void)render:(CADisplayLink*)displayLink {
     
@@ -418,67 +613,17 @@ FT_Face     face;
     
     //check interval
     generateInterval += intervalms;
-    if(generateInterval > 0.01f) {
+    if(generateInterval > 0.05f) {
         int a = arc4random() % 1000;
         float x = (float)(a - 500.0f) / 100.0f;
-        NSLog(@"total : %lu, new box = %f %f",boxList.size(), x, 50.0f);
+        [self _debug_data:(1 / intervalms) box_num:boxList.size()];
+        //NSLog(@"total : %lu, new box = %f %f",boxList.size(), x, 50.0f);
         [self makeBox:x y:50.0f];
         generateInterval = 0.0f;
         NSLog(@"fps = %f", 1 / intervalms);
     }
     
-    int error = FT_Init_FreeType( &library );
-    if ( error )
-    {
-        //... an error occurred during library initialization ...
-        NSLog(@"... an error occurred during library initialization ...");
-    }
-    error = FT_New_Face( library,
-//                        "/usr/share/fonts/truetype/arial.ttf",
-                        "/System/Library/Fonts/AppleGothic.ttf",
-                        0,
-                        &face );
-    if ( error == FT_Err_Unknown_File_Format )
-    {
-        //... the font file could be opened and read, but it appears
-        //... that its font format is unsupported
-        NSLog(@"... the font file could be opened and read, but it appears that its font format is unsupported...");
-    }
-    else if ( error )
-    {
-        //... another error code means that the font file could not
-        //... be opened or read, or simply that it is broken...
-        NSLog(@"... another error code means that the font file could not be opened or read, or simply that it is broken...");
-    }
-    
-    FT_GlyphSlot  slot = face->glyph;  /* a small shortcut */
-    int           pen_x, pen_y, n;
-    
-    pen_x = 300;
-    pen_y = 200;
-    
-    FT_UInt  glyph_index;
-    char text[] = "test test test test";
-    
-    /* retrieve glyph index from character code */
-    glyph_index = FT_Get_Char_Index( face, text[0] );
-    
-    /* load glyph image into the slot (erase previous one) */
-    error = FT_Load_Glyph( face, glyph_index, FT_LOAD_DEFAULT );
-    if ( error ) {}
-    
-    /* convert to an anti-aliased bitmap */
-    error = FT_Render_Glyph( face->glyph, FT_RENDER_MODE_NORMAL );
-    if ( error ) {}
-    
-    /* now, draw to our target surface */
-    //my_draw_bitmap( &slot->bitmap,
-    //               pen_x + slot->bitmap_left,
-    //               pen_y - slot->bitmap_top );
-    
-    /* increment pen position */
-    pen_x += slot->advance.x >> 6;
-    pen_y += slot->advance.y >> 6; /* not useful for now */    
+
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -524,6 +669,8 @@ FT_Face     face;
         [self drawBox:vertices];
     }
     
+    
+    //[self drawText:(1 / intervalms)];
     [self drawSky];
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];

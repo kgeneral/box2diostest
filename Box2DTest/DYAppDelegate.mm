@@ -28,14 +28,6 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-    /*
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];    
-    self.glView = [[DYViewController alloc] initWithFrame:screenBounds] ;
-    [self.window addSubview:_glView];
-    [self.window makeKeyAndVisible];
-     
-     
-     */
     return YES;
 }
 
